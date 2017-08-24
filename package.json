@@ -3,8 +3,11 @@
   "version": "0.2.0",
   "description": "Migration tool for cassandra",
   "main": "migrate.js",
+  "bin":{
+    "migrate": "./lib/migrate.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel ./src --out-dir ./lib"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/chyzwar/cassandra-migrate/issues"
   },
-  "homepage": "https://github.com/chyzwar/cassandra-migrate#readme"
+  "homepage": "https://github.com/chyzwar/cassandra-migrate#readme",
+  "dependencies": {
+    "cassandra-driver": "3.x.x",
+    "commander": "2.x.x",
+    "winston": "2.x.x"
+  },
+  "devDependencies": {
+    "babel-preset-env": "1.x.x",
+    "babel-cli": "6.x.x"
+  }
 }
