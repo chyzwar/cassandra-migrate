@@ -31,10 +31,10 @@ module.exports = ${migration};`;
  */
 const cql = (migration) =>
 `
--- up
+-- up ${migration}
 
 
--- dw`;
+-- dw ${migration}`;
 
 
 /**
