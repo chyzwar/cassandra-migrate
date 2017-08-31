@@ -37,9 +37,10 @@ program
   .option("-d, --directory [directory]", "migrations directory", "migrations")
   .option("-e, --envirotment [envirotment]", "node envirotment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
-  .option("-l, --client [client]", "db client", "server/db")
+  .option("-c, --client [client]", "db client module", "server/db")
   .action(async ({directory, envirotment, logger, client}) => {
     const up = require("./command/up");
+
 
     envirotment = setEnvirotment(envirotment);
     logger = loadLogger(logger);

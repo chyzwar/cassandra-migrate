@@ -3,8 +3,8 @@
   "version": "0.2.0",
   "description": "Migration tool for cassandra",
   "main": "migrate.js",
-  "bin":{
-    "migrate": "./lib/migrate.js"
+  "bin": {
+    "migrate": "./bin/migrate"
   },
   "scripts": {
     "build": "babel ./src --out-dir ./lib"
@@ -22,7 +22,8 @@
   "dependencies": {
     "cassandra-driver": "3.x.x",
     "commander": "2.x.x",
-    "winston": "2.x.x"
+    "winston": "2.x.x",
+    "lodash": "4.x.x"
   },
   "devDependencies": {
     "babel-preset-env": "1.x.x",

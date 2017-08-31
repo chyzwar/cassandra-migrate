@@ -1,0 +1,12 @@
+# Logs
+*.log
+
+# Node Files #
+node_modules
+
+# Build Folder #
+build
+
+# Editors #
+.idea/
+.vscode

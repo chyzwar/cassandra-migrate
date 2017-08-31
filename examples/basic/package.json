@@ -1,0 +1,19 @@
+{
+  "name": "basic-migrations",
+  "version": "1.0.0",
+  "description": "example for cassandra-migrate",
+  "main": "index.js",
+  "scripts": {
+    "migrate:create": "migrate create",
+    "migrate:up": "migrate up --client ./db --logger ./logger",
+    "migrate:down": "migrate down --client ./db --logger ./logger",
+    "migrate:reset": "migrate reset --client ./db --logger ./logger"
+  },
+  "author": "chyzwar",
+  "license": "MIT",
+  "dependencies": {
+    "cassandra-migrate": "chyzwar/cassandra-migrate",
+    "cassandra-driver": "*",
+    "winston": "*"
+  }
+}
