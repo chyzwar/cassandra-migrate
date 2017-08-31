@@ -3,13 +3,12 @@ const fs = require("fs");
 const {exit} = require("process");
 
 /**
- * Create a template for miration
+ * JS migaration format
  *
- * @param  {String} dateString
  * @param  {String} migration
  * @return {String}
  */
-const template = (migration) =>
+const js = (migration) =>
 `
 const ${migration} = {
   up: {
@@ -24,6 +23,35 @@ const ${migration} = {
 
 module.exports = ${migration};`;
 
+/**
+ * CQL migartion
+ *
+ * @param  {String} migration
+ * @return {String}
+ */
+const cql = (migration) =>
+`
+-- up
+
+
+-- dw`;
+
+
+/**
+ * Create a template for miration
+ *
+ * @param  {String} dateString
+ * @param  {String} migration
+ * @return {String}
+ */
+const template = (migration, format) =>{
+  if(format === "js"){
+    return js(migration)
+  }
+  if(format === cql){
+    return cql(migration)
+  }
+}
 
 
 /**
@@ -32,8 +60,8 @@ module.exports = ${migration};`;
  * @param  {String} migration
  * @return {String}
  */
-const fileName = (directory, dateString, migration) =>
-  `${directory}/${dateString}_${migration}.js`;
+const fileName = (directory, dateString, migration, format) =>
+  `${directory}/${dateString}_${migration}.${format}`;
 
 
 
@@ -43,12 +71,12 @@ const fileName = (directory, dateString, migration) =>
  * @param  {String} migration
  * @return {void}
  */
-function create(env, migration, directory, logger){
+function create(env, migration, directory, logger, format){
   try {
     const date = moment().format("YYYY_MM_DD_HHmm");
 
-    const file = fileName(directory, date, migration);
-    const temp = template(migration);
+    const file = fileName(directory, date, migration, format);
+    const temp = template(migration, format);
 
     fs.writeFileSync(
       file,

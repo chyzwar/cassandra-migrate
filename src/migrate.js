@@ -4,6 +4,7 @@ const loadLogger = require("./helpers/loadLogger");
 const program = require("commander");
 const setEnvirotment = require("./helpers/setEnvirotment");
 const validateName = require("./helpers/validateName");
+const checkFormat = require("./helpers/checkFormat");
 
 program
   .version("0.2.1")
@@ -15,19 +16,22 @@ program
   .option("-d, --directory [directory]", "migrations directory", "migrations")
   .option("-e, --envirotment [envirotment]", "node envirotment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
-  .action((migration, {directory, envirotment, logger}) => {
+  .option("-f, --format [format]", "migration format", "js")
+  .action((migration, {directory, envirotment, logger, format}) => {
     const create = require("./command/create");
 
     envirotment = setEnvirotment(envirotment);
     logger = loadLogger(logger);
     migration = validateName(migration, logger);
     directory = checkDirectory(directory, logger);
+    format = checkFormat(format, logger);
 
     create(
       envirotment,
       migration,
       directory,
-      logger
+      logger,
+      format
     );
   });
 
