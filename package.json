@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "babel-preset-env": "1.x.x",
-    "babel-cli": "6.x.x"
+    "babel-cli": "6.x.x",
+    "babel-polyfill": "6.x.x"
   }
 }

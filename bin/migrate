@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
-require("./lib/migrate");
+require("babel-polyfill");
+require("../lib/migrate");
