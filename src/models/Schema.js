@@ -130,7 +130,7 @@ class Schema{
   getMigrations(directory){
     return this.migrations
       .rows
-      .map(migration => Migration.load(migration, directory));
+      .map(migration => Migration.fromRow(migration, directory));
   }
 
 

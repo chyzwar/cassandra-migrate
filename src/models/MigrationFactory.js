@@ -1,5 +1,5 @@
+const {join, extname} = require("path");
 const {readFileSync} = require("fs");
-const {join} = require("path");
 
 class Migration{
   constructor(filename, directory) {
@@ -8,6 +8,19 @@ class Migration{
      * @type {String}
      */
     const filePath = join(directory, filename);
+    const extension = extname(filePath);
+    /**
+     * Set filePath
+     *
+     * @type {String}
+     */
+    this.filename = filename;
+
+
+
+    if(extname(filePath) === "js"){
+      this.loadModule()
+    }
 
     /**
      * Read migration content
@@ -19,6 +32,7 @@ class Migration{
       {encoding: "utf8"}
     );
 
+
     /**
      * Load migration module
      *
@@ -27,13 +41,6 @@ class Migration{
     this.migration = require(
       filePath
     );
-
-    /**
-     * Set filePath
-     *
-     * @type {String}
-     */
-    this.filename = filename;
   }
 
   /**
@@ -44,13 +51,26 @@ class Migration{
    * @param  {Number} options.version
    * @return {Migration}
    */
-  static load({filename, timestamp, version}, directory){
+  static fromRow({filename, timestamp, version}, directory){
+    const filePath = join(directory, filename);
+
     const migration = new Migration(filename, directory);
 
     migration.timestamp = timestamp;
     migration.version = version;
 
     return migration;
+  }
+
+  static fromFile(fileName, directory){
+    const filePath = join(directory, filename);
+
+    if(extname(fileName) === "js"){
+
+    }
+    if(extname(fileName) === "cql"){
+
+    }
   }
 }
 

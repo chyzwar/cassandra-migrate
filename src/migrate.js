@@ -1,3 +1,4 @@
+
 const loadClient = require("./helpers/loadClient");
 const checkDirectory = require("./helpers/checkDirectory");
 const loadLogger = require("./helpers/loadLogger");
@@ -16,7 +17,7 @@ program
   .option("-d, --directory [directory]", "migrations directory", "migrations")
   .option("-e, --envirotment [envirotment]", "node envirotment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
-  .option("-f, --format [format]", "migration format", "js")
+  .option("-f, --format [format]", "migration format", "cql")
   .action((migration, {directory, envirotment, logger, format}) => {
     const create = require("./command/create");
 
@@ -44,7 +45,6 @@ program
   .option("-c, --client [client]", "db client module", "server/db")
   .action(async ({directory, envirotment, logger, client}) => {
     const up = require("./command/up");
-
 
     envirotment = setEnvirotment(envirotment);
     logger = loadLogger(logger);
