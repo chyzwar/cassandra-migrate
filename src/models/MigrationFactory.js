@@ -1,78 +1,50 @@
-const {join, extname} = require("path");
-const {readFileSync} = require("fs");
+const MigrationJS = require("./MigrationJS");
+const MigrationCQL = require("./MigrationCQL");
+const {extname} = require("path");
 
-class Migration{
-  constructor(filename, directory) {
-    /**
-     * Get filePath
-     * @type {String}
-     */
-    const filePath = join(directory, filename);
-    const extension = extname(filePath);
-    /**
-     * Set filePath
-     *
-     * @type {String}
-     */
-    this.filename = filename;
+class MigrationFactory{
+  /**
+   * Create Migration from DB record
+   *
+   * @param  {Object} migration
+   * @param  {String} directory
+   * @return {Migration}
+   */
+  static fromDB(migration, directory){
+    const extension = extname(migration.filename);
 
-
-
-    if(extname(filePath) === "js"){
-      this.loadModule()
+    if(extension === "JS"){
+      return MigrationJS.fromDB(migration, directory);
+    }
+    if(extension === "CQL"){
+      return MigrationCQL.fromDB(migration, directory);
     }
 
-    /**
-     * Read migration content
-     *
-     * @type {String}
-     */
-    this.content = readFileSync(
-      filePath,
-      {encoding: "utf8"}
-    );
-
-
-    /**
-     * Load migration module
-     *
-     * @type {Object}
-     */
-    this.migration = require(
-      filePath
+    throw new Error(
+      "Unknown migration extension", {extension}
     );
   }
 
   /**
-   * Load from database object
-   *
-   * @param  {String} options.filePath
-   * @param  {Number} options.timestamp
-   * @param  {Number} options.version
+   * Create Migration from file
+   * @param  {String} filename
+   * @param  {String} directory
    * @return {Migration}
    */
-  static fromRow({filename, timestamp, version}, directory){
-    const filePath = join(directory, filename);
+  static fromFile(filename, directory){
+    const extension = extname(filename);
 
-    const migration = new Migration(filename, directory);
-
-    migration.timestamp = timestamp;
-    migration.version = version;
-
-    return migration;
-  }
-
-  static fromFile(fileName, directory){
-    const filePath = join(directory, filename);
-
-    if(extname(fileName) === "js"){
-
+    if(extension === "JS"){
+      return MigrationJS.fromFile(filename, directory);
     }
-    if(extname(fileName) === "cql"){
-
+    if(extension === "CQL"){
+      return MigrationCQL.fromFile(filename, directory);
     }
+
+    throw new Error(
+      "Unknown migration extension", {extension}
+    );
   }
 }
 
-
-module.exports = Migration;
+module.exports = MigrationFactory;

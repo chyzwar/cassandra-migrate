@@ -1,5 +1,5 @@
 const {exit} = require("process");
-const Migration = require("./Migration");
+const MigrationFactory = require("./MigrationFactory");
 const {last} = require("lodash");
 
 const createSchemaType =
@@ -130,7 +130,7 @@ class Schema{
   getMigrations(directory){
     return this.migrations
       .rows
-      .map(migration => Migration.fromRow(migration, directory));
+      .map(migration => MigrationFactory.fromDB(migration, directory));
   }
 
 
@@ -160,11 +160,9 @@ class Schema{
     migration.timestamp = new Date();
 
     const {
-      migration: {
-        up: {
-          query,
-          params
-        }
+      up: {
+        query,
+        params
       },
       filename
     } = migration;
@@ -183,11 +181,9 @@ class Schema{
    */
   async down(migration){
     const {
-      migration: {
-        down: {
-          query,
-          params
-        }
+      down: {
+        query,
+        params
       },
       filename
     } = migration;

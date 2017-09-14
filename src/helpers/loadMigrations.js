@@ -23,7 +23,7 @@ function loadMigrations(directory, logger){
     return readdirSync(directory)
       .filter(selectByExt)
       .map(
-        (fileName) => Migration.fromFile(directory, fileName));
+        (fileName) => toMigration(fileName, directory));
   }
   catch(error) {
     logger.error("Error loading migration", {directory, error});
