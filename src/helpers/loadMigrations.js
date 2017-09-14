@@ -8,8 +8,9 @@ const {extname} = require("path")
 function selectByExt(filePath){
   const ext = extname(filePath);
   return (extname(filePath) === "js" || extname(filePath) === "cql");
-
 }
+
+function to O
 
 /**
  * Load migration in directory, ignore other files
@@ -20,10 +21,9 @@ function selectByExt(filePath){
  */
 function loadMigrations(directory, logger){
   try {
-    return readdirSync(directory)
-      .filter(selectByExt)
-      .map(
-        (fileName) => toMigration(fileName, directory));
+    const files = readdirSync(directory);
+      .map((fileName) => toObject(fileName, directory))
+      .map((fileName) => toMigration());
   }
   catch(error) {
     logger.error("Error loading migration", {directory, error});
