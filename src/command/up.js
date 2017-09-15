@@ -25,7 +25,14 @@ async function up(client, directory, logger){
     }
   }
   catch(error){
-    logger.error("Migration failed", {error});
+    logger.error("Migration failed",
+      {
+        error: {
+          message: error.message,
+          stack: error.stack
+        }
+      }
+    );
   }
   exit();
 }
