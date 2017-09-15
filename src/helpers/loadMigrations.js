@@ -1,4 +1,4 @@
-const Migration = require("../models/Migration");
+const MigrationFactory = require("../models/MigrationFactory");
 const {exit} = require("process");
 const {readdirSync} = require("fs");
 const {extname} = require("path")
@@ -10,8 +10,6 @@ function selectByExt(filePath){
   return (extname(filePath) === "js" || extname(filePath) === "cql");
 }
 
-function to O
-
 /**
  * Load migration in directory, ignore other files
  *
@@ -22,8 +20,8 @@ function to O
 function loadMigrations(directory, logger){
   try {
     const files = readdirSync(directory);
-      .map((fileName) => toObject(fileName, directory))
-      .map((fileName) => toMigration());
+      .filter(selectByExt)
+      .map((fileName) => MigrationFactory.fromFile(fileName, directory));
   }
   catch(error) {
     logger.error("Error loading migration", {directory, error});

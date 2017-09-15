@@ -1,14 +1,18 @@
 
 function requireCQL(filePath){
-  const content = readFileSync(filePath);
+  const lines = readFileSync(filePath).split(/\r?\n/);
 
-  const up =  content.split("-- up")
+  const upStartLine = lines.findIndex((line) => line.includes("-- up"));
+  const dwStartLine = lines.findIndex((line) => line.includes("-- down"));
 
-  return {up, down};
+  return {
+    up: {query: lines.slice(upStartLine, dwStartLine).join(), params: undefined},
+    down: {query: lines.slice(upStartLine).join(), params: undefined}
+  };
 }
 
 
-class MigrationCQL
+class MigrationCQL{
   constructor(filename, content, up, down, timestamp, version){
     /**
      * Set filePath
