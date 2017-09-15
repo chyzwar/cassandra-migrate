@@ -19,7 +19,7 @@ function selectByExt(filePath){
  */
 function loadMigrations(directory, logger){
   try {
-    const files = readdirSync(directory);
+    const files = readdirSync(directory)
       .filter(selectByExt)
       .map((fileName) => MigrationFactory.fromFile(fileName, directory));
   }
