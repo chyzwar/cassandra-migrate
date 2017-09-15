@@ -12,8 +12,8 @@
   "author": "chyzwar",
   "license": "MIT",
   "dependencies": {
-    "cassandra-migrate": "chyzwar/cassandra-migrate",
     "cassandra-driver": "*",
+    "cassandra-migrate": "github:chyzwar/cassandra-migrate",
     "winston": "*"
   }
 }

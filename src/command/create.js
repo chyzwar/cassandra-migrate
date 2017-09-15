@@ -34,7 +34,7 @@ const cql = (migration) =>
 -- up ${migration}
 
 
--- dw ${migration}`;
+-- down ${migration}`;
 
 
 /**
@@ -48,7 +48,7 @@ const template = (migration, format) =>{
   if(format === "js"){
     return js(migration)
   }
-  if(format === cql){
+  if(format === "cql"){
     return cql(migration)
   }
 }

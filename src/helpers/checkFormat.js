@@ -1,4 +1,4 @@
-
+const {exit} = require("process");
 
 function checkFormat(format, logger){
   if(format === "js" || format === "cql"){
