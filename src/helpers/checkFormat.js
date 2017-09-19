@@ -1,5 +1,12 @@
 const {exit} = require("process");
 
+/**
+ * Check file format
+ *
+ * @param  {String} format
+ * @param  {Logger} logger
+ * @return {String}
+ */
 function checkFormat(format, logger){
   if(format === "js" || format === "cql"){
     return format;
