@@ -84,7 +84,7 @@ function create(env, migration, directory, logger, format){
       {flag: "wx", encoding: "utf8"}
     );
 
-    logger.info("Up- Migration created sucessfully", {
+    logger.info("Up - Migration created sucessfully", {
       file,
       migration
     });
