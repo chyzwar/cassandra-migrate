@@ -1,6 +1,9 @@
-const {exit} = require("process");
-const MigrationFactory = require("./MigrationFactory");
-const {last} = require("lodash");
+import Client from "../types/Client";
+import Logger from "../types/Logger";
+import MigrationFactory from "./MigrationFactory";
+import {exit} from "process";
+import {last} from "lodash";
+import Migration from "../types/Migration";
 
 const createSchemaType =
 `
@@ -32,8 +35,16 @@ DELETE FROM schema_migration WHERE filename = ?
 `;
 
 
+interface Migration{
+
+}
+
 class Schema{
-  constructor(client, logger) {
+  private client: Client;
+  private logger: Logger;
+  private migrations!: MigrationDB[];
+
+  constructor(client: Client, logger: Logger) {
     /**
      * Cassandra Client
      *
@@ -100,10 +111,7 @@ class Schema{
   }
 
   /**
-   * Chceck if migration exist in schema
-   *
-   * @param  {String}  migration.filename
-   * @return {Boolean}
+   * Check if migration exist in schema
    */
   has({filename}){
     return this
@@ -115,8 +123,6 @@ class Schema{
   /**
    * Check if migration is recent
    *
-   * @param  {Number} options.version
-   * @return {Boolean}
    */
   isRecent({version}){
     return this.getVersion() === version;
@@ -124,8 +130,6 @@ class Schema{
 
   /**
    * Get migrations
-   *
-   * @return {Migrations}
    */
   getMigrations(directory){
     return this.migrations
@@ -170,7 +174,7 @@ class Schema{
     await this.client
       .execute(query, params, {prepare: true});
 
-    this.logger.info("Up - Migration succesfull", {filename});
+    this.logger.info("Up - Migration successfull", {filename});
   }
 
   /**
@@ -251,4 +255,4 @@ class Schema{
   }
 }
 
-module.exports = Schema;
+export default Schema;

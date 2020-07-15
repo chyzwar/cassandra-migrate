@@ -7,7 +7,8 @@
     "migrate": "./bin/migrate"
   },
   "scripts": {
-    "build": "babel ./src --out-dir ./lib"
+    "build": "tsc --build",
+    "build:watch": "tsc --build --watch"
   },
   "repository": {
     "type": "git",
@@ -21,14 +22,15 @@
   "homepage": "https://github.com/chyzwar/cassandra-migrate#readme",
   "dependencies": {
     "commander": "2.x.x",
-    "winston": "2.x.x",
+    "winston": "3.x.x",
     "lodash": "4.x.x",
-    "moment": "2.21.x",
-    "babel-polyfill": "6.x.x"
+    "moment": "2.x.x"
   },
   "devDependencies": {
-    "babel-preset-env": "1.x.x",
-    "babel-cli": "6.x.x",
-    "eslint": "4.x.x"
+    "@types/node": "14.x.x",
+    "@types/jest": "^26.x.x",
+    "@types/lodash": "4.x.x",
+    "eslint": "7.x.x",
+    "typescript": "^3.x.x"
   }
 }

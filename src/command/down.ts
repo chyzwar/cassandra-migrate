@@ -1,14 +1,12 @@
-const Schema = require("../models/Schema");
-const {exit} = require("process");
+import Logger from "../types/Logger";
+import Schema from "../models/Schema";
+import {exit} from "process";
+import Client from "../types/Client";
 
 /**
  * Run outstanding migrations
- *
- * @param  {Client} client
- * @param  {String} directory
- * @param  {Logger} logger
  */
-async function down(client, directory, logger){
+async function down(client: Client, directory: string, logger: Logger){
   const schema = new Schema(client, logger);
 
   await schema.connect();
@@ -31,4 +29,4 @@ async function down(client, directory, logger){
   exit();
 }
 
-module.exports = down;
+export default down;

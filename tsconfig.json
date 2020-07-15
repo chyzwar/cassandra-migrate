@@ -1,0 +1,35 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "target": "ES2019",
+    "newLine": "lf",
+    "outDir": "lib",
+    "rootDir": "src",
+    "tsBuildInfoFile": "./lib/buildInfo.json",
+    "incremental": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+
+    "allowUnreachableCode": false,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "pretty": true,
+    "declaration": true,
+    "declarationMap": true,
+    "listEmittedFiles": false,
+    "types": [
+      "jest",
+      "node"
+    ]
+  }
+}

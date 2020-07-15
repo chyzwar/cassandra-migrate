@@ -1,8 +1,9 @@
-const {join} = require("path");
-const {readFileSync} = require("fs");
+import {join} from "path";
+import {readFileSync} from "fs";
+import Migration from "../types/Migration";
 
-class MigrationJS{
-  constructor(filename, content, up, down, timestamp, version) {
+class MigrationJS implements Migration{
+  constructor(filename, content, up: string, down: string, timestamp, version) {
     /**
      * Set filePath
      *
@@ -40,12 +41,16 @@ class MigrationJS{
 
     /**
      * Migration schema version
-     * @type {Nmber}
+     * @type {Number}
      */
     this.version = version
   }
+  filename: string;
+  content: string;
+  timestamp: number;
+  version: string;
 
-  static fromDB({filename, content, timestamp, version}, directory){
+  static fromDB({filename, content, timestamp, version}: Migration, directory: string){
     const filePath = join(directory, filename);
 
     const {
@@ -63,7 +68,7 @@ class MigrationJS{
     );
   }
 
-  static fromFile(filename, directory){
+  static fromFile(filename: string, directory: string){
     const filePath = join(directory, filename);
     const content = readFileSync(filePath);
 
@@ -82,4 +87,4 @@ class MigrationJS{
 }
 
 
-module.exports = MigrationJS;
+export default MigrationJS;

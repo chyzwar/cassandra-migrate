@@ -1,6 +1,9 @@
-const loadMigrations = require("../helpers/loadMigrations");
-const Schema = require("../models/Schema");
-const {exit} = require("process");
+import Client from "../types/Client";
+import Logger from "../types/Logger";
+import loadMigrations from "../helpers/loadMigrations";
+
+import Schema from "../models/Schema";
+import {exit} from "process";
 
 /**
  * Run outstanding migrations
@@ -9,7 +12,7 @@ const {exit} = require("process");
  * @param  {String} directory
  * @param  {Logger} logger
  */
-async function up(client, directory, logger){
+async function up(client: Client, directory: string, logger: Logger){
   const schema = new Schema(client, logger);
 
   await schema.connect();
@@ -37,4 +40,4 @@ async function up(client, directory, logger){
   exit();
 }
 
-module.exports = up;
+export default up;

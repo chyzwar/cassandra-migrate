@@ -1,14 +1,16 @@
-const moment = require("moment");
-const fs = require("fs");
-const {exit} = require("process");
+import moment from "moment";
+import fs from "fs";
+import { exit } from "process";
+import Logger from "../types/Logger";
+import Format from "../constants/Format";
 
 /**
- * JS migaration format
+ * JS migration format
  *
  * @param  {String} migration
  * @return {String}
  */
-const js = (migration) =>
+const js = (migration: string): string =>
 `
 const ${migration} = {
   up: {
@@ -24,12 +26,12 @@ const ${migration} = {
 module.exports = ${migration};`;
 
 /**
- * CQL migartion
+ * CQL migration
  *
  * @param  {String} migration
  * @return {String}
  */
-const cql = (migration) =>
+const cql = (migration: string): string =>
 `
 -- up ${migration}
 
@@ -38,17 +40,16 @@ const cql = (migration) =>
 
 
 /**
- * Create a template for miration
+ * Create a template for migration
  *
  * @param  {String} dateString
  * @param  {String} migration
  * @return {String}
  */
-const template = (migration, format) =>{
-  if(format === "js"){
+const template = (migration: string, format: Format): string =>{
+  if (format === Format.JS) {
     return js(migration)
-  }
-  if(format === "cql"){
+  }else {
     return cql(migration)
   }
 }
@@ -60,7 +61,7 @@ const template = (migration, format) =>{
  * @param  {String} migration
  * @return {String}
  */
-const fileName = (directory, dateString, migration, format) =>
+const fileName = (directory: string, dateString: string, migration: string, format: string) =>
   `${directory}/${dateString}_${migration}.${format}`;
 
 
@@ -71,7 +72,7 @@ const fileName = (directory, dateString, migration, format) =>
  * @param  {String} migration
  * @return {void}
  */
-function create(env, migration, directory, logger, format){
+function create(env: string, migration: string, directory: string, logger: Logger, format: Format){
   try {
     const date = moment().format("YYYY_MM_DD_HHmm");
 
@@ -84,7 +85,7 @@ function create(env, migration, directory, logger, format){
       {flag: "wx", encoding: "utf8"}
     );
 
-    logger.info("Up - Migration created sucessfully", {
+    logger.info("Up - Migration created successfully", {
       file,
       migration
     });
@@ -95,5 +96,5 @@ function create(env, migration, directory, logger, format){
   }
 }
 
-module.exports = create;
+export default create;
 

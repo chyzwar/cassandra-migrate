@@ -1,6 +1,7 @@
-const MigrationJS = require("./MigrationJS");
-const MigrationCQL = require("./MigrationCQL");
-const {extname} = require("path");
+import Migration from "../types/Migration";
+import MigrationJS from "./MigrationJS";
+import MigrationCQL from "./MigrationCQL";
+import {extname} from "path";
 
 class MigrationFactory{
   /**
@@ -10,7 +11,7 @@ class MigrationFactory{
    * @param  {String} directory
    * @return {Migration}
    */
-  static fromDB(migration, directory){
+  static fromDB(migration: Migration, directory: string): Migration{
     const extension = extname(migration.filename);
 
     if(extension === "JS"){
@@ -21,7 +22,7 @@ class MigrationFactory{
     }
 
     throw new Error(
-      "Unknown migration extension", {extension}
+      `Unknown migration extension: ${extension}`
     );
   }
 
@@ -31,7 +32,7 @@ class MigrationFactory{
    * @param  {String} directory
    * @return {Migration}
    */
-  static fromFile(filename, directory){
+  static fromFile(filename: string, directory: string): Migration{
     const extension = extname(filename);
 
     if(extension === "JS"){
@@ -42,9 +43,9 @@ class MigrationFactory{
     }
 
     throw new Error(
-      "Unknown migration extension", {extension}
+      `Unknown migration extension: ${extension}`
     );
   }
 }
 
-module.exports = MigrationFactory;
+export default MigrationFactory;
