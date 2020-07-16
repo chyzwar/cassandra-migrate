@@ -1,16 +1,12 @@
-const {existsSync} = require("fs");
-const {exit} = require("process");
-const {resolve} = require("path");
-
+import Logger from "../types/Logger";
+import {existsSync} from "fs";
+import {exit} from "process";
+import {resolve} from "path";
 
 /**
- * Check if migratin directory exist
- *
- * @param  {String} directory
- * @param  {Logger} logger
- * @return {String}
+ * Check if migration directory exist
  */
-function checkDirectory(directory, logger) {
+function checkDirectory(directory: string, logger: Logger) {
   const path = resolve(directory);
 
   if(existsSync(path)){
@@ -22,4 +18,4 @@ function checkDirectory(directory, logger) {
   }
 }
 
-module.exports = checkDirectory;
+export default checkDirectory;

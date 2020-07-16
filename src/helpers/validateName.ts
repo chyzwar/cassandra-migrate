@@ -1,4 +1,5 @@
-const {exit} = require("process");
+import Logger from "../types/Logger";
+import {exit} from "process";
 
 /**
  * Migration name pattern
@@ -9,12 +10,8 @@ const NAME = /^[a-z0-9\_]*$/i;
 
 /**
  * Validate migration name
- *
- * @param  {String} migration
- * @param  {Logger} logger
- * @return {String}
  */
-function validateName(migration, logger) {
+function validateName(migration: string, logger: Logger): string {
   if(NAME.test(migration)){
     return migration;
   }
@@ -24,4 +21,4 @@ function validateName(migration, logger) {
   }
 }
 
-module.exports = validateName;
+export default validateName;

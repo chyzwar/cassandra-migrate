@@ -1,11 +1,11 @@
 
-const loadClient = require("./helpers/loadClient");
-const checkDirectory = require("./helpers/checkDirectory");
-const loadLogger = require("./helpers/loadLogger");
-const program = require("commander");
-const setEnvirotment = require("./helpers/setEnvirotment");
-const validateName = require("./helpers/validateName");
-const checkFormat = require("./helpers/checkFormat");
+import loadClient  from "./helpers/loadClient";
+import checkDirectory  from "./helpers/checkDirectory";
+import loadLogger  from "./helpers/loadLogger";
+import program  from "commander";
+import setEnvironment  from "./helpers/setEnvironment";
+import validateName  from "./helpers/validateName";
+import checkFormat  from "./helpers/checkFormat";
 
 program
   .version("0.2.1")
@@ -15,20 +15,20 @@ program
   .command("create <migration>")
   .description("create new migration")
   .option("-d, --directory [directory]", "migrations directory", "migrations")
-  .option("-e, --envirotment [envirotment]", "node envirotment", "local")
+  .option("-e, --environment [environment]", "node environment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
   .option("-f, --format [format]", "migration format", "cql")
-  .action((migration, {directory, envirotment, logger, format}) => {
+  .action((migration, {directory, environment, logger, format}) => {
     const create = require("./command/create");
 
-    envirotment = setEnvirotment(envirotment);
+    environment = setEnvironment(environment);
     logger = loadLogger(logger);
     migration = validateName(migration, logger);
     directory = checkDirectory(directory, logger);
     format = checkFormat(format, logger);
 
     create(
-      envirotment,
+      environment,
       migration,
       directory,
       logger,
@@ -40,13 +40,13 @@ program
   .command("up")
   .description("run outstanding migrations")
   .option("-d, --directory [directory]", "migrations directory", "migrations")
-  .option("-e, --envirotment [envirotment]", "node envirotment", "local")
+  .option("-e, --environment [environment]", "node environment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
   .option("-c, --client [client]", "db client module", "server/db")
-  .action(async ({directory, envirotment, logger, client}) => {
+  .action(async ({directory, environment, logger, client}) => {
     const up = require("./command/up");
 
-    envirotment = setEnvirotment(envirotment);
+    environment = setEnvironment(environment);
     logger = loadLogger(logger);
     directory = checkDirectory(directory, logger);
     client = loadClient(client, logger);
@@ -55,7 +55,7 @@ program
       client,
       directory,
       logger,
-      envirotment
+      environment
     );
   });
 
@@ -63,13 +63,13 @@ program
   .command("down")
   .description("revert last migrations")
   .option("-d, --directory [directory]", "migrations directory", "migrations")
-  .option("-e, --envirotment [envirotment]", "node envirotment", "local")
+  .option("-e, --environment [environment]", "node environment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
   .option("-l, --client [client]", "db client", "server/db")
-  .action(({directory, envirotment, logger, client}) => {
+  .action(({directory, environment, logger, client}) => {
     const down = require("./command/down");
 
-    envirotment = setEnvirotment(envirotment);
+    environment = setEnvironment(environment);
     logger = loadLogger(logger);
     directory = checkDirectory(directory, logger);
     client = loadClient(client, logger);
@@ -78,7 +78,7 @@ program
       client,
       directory,
       logger,
-      envirotment
+      environment
     );
   });
 
@@ -86,13 +86,13 @@ program
   .command("reset")
   .description("run outstanding migrations")
   .option("-d, --directory [directory]", "migrations directory", "migrations")
-  .option("-e, --envirotment [envirotment]", "node envirotment", "local")
+  .option("-e, --environment [environment]", "node environment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
   .option("-l, --client [client]", "db client", "server/db")
-  .action(({directory, envirotment, logger, client}) => {
+  .action(({directory, environment, logger, client}) => {
     const reset = require("./command/reset");
 
-    envirotment = setEnvirotment(envirotment);
+    environment = setEnvironment(environment);
     logger = loadLogger(logger);
     directory = checkDirectory(directory, logger);
     client = loadClient(client, logger);
@@ -101,7 +101,7 @@ program
       client,
       directory,
       logger,
-      envirotment
+      environment
     );
   });
 
@@ -110,13 +110,13 @@ program
   .command("status")
   .description("run outstanding migrations")
   .option("-d, --directory [directory]", "migrations directory", "migrations")
-  .option("-e, --envirotment [envirotment]", "node envirotment", "local")
+  .option("-e, --environment [environment]", "node environment", "local")
   .option("-l, --logger [logger]", "logger module", "server/logger")
   .option("-l, --client [client]", "db client", "server/db")
-  .action(({directory, envirotment, logger, client}) => {
+  .action(({directory, environment, logger, client}) => {
     const status = require("./command/status");
 
-    envirotment = setEnvirotment(envirotment);
+    environment = setEnvironment(environment);
     logger = loadLogger(logger);
     directory = checkDirectory(directory, logger);
     client = loadClient(client, logger);
@@ -125,7 +125,7 @@ program
       client,
       directory,
       logger,
-      envirotment
+      environment
     );
   });
 

@@ -1,13 +1,12 @@
-const {resolve} = require("path");
+import Logger from "../types/Logger";
+import {resolve} from "path";
 
 /**
  * Try to load logger or fallback to console
  *
- * @param  {String} logger
- * @return {Object}
  */
-function loadLogger(logger) {
-  const path = resolve(logger);
+function loadLogger(loggerPath: string): Logger {
+  const path = resolve(loggerPath);
 
   try {
     return require(path);
@@ -17,4 +16,4 @@ function loadLogger(logger) {
   }
 }
 
-module.exports = loadLogger;
+export default loadLogger;

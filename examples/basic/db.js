@@ -28,7 +28,7 @@ const client = new cassandra.Client({
 client
   .connect()
   .then(() =>
-    logger.info("Cassandra connected successfuly", {
+    logger.info("Cassandra connected successfully", {
       client: {
         hosts: client.hosts.length,
         keys: client.hosts.keys()
@@ -43,7 +43,7 @@ client
 
 
 /**
- * Add conatant for prepared statements
+ * Add constant for prepared statements
  *
  * @type {Object}
  */

@@ -1,6 +1,6 @@
-import { exit } from "process";
 import Logger from "../types/Logger";
 import Format from "../constants/Format";
+import { exit } from "process";
 
 /**
  * Check file format

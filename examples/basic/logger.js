@@ -1,14 +1,14 @@
 const winston = require("winston");
 
 /**
- * Initialise application logger
+ * Initialize application logger
  *
  * @type {Logger}
  */
 const logger  = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
-    	colorize: "all",
+      colorize: "all",
       prettyPrint: true,
       level: "silly",
     })

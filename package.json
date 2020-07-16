@@ -28,9 +28,10 @@
   },
   "devDependencies": {
     "@types/node": "14.x.x",
-    "@types/jest": "^26.x.x",
+    "@types/jest": "26.x.x",
     "@types/lodash": "4.x.x",
+    "@types/commander": "2.x.x",
     "eslint": "7.x.x",
-    "typescript": "^3.x.x"
+    "typescript": "3.x.x"
   }
 }

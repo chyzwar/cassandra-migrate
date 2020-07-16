@@ -4,6 +4,7 @@ import MigrationFactory from "./MigrationFactory";
 import {exit} from "process";
 import {last} from "lodash";
 import Migration from "../types/Migration";
+import PersistedMigration from "../types/SavedMigration";
 
 const createSchemaType =
 `
@@ -35,14 +36,11 @@ DELETE FROM schema_migration WHERE filename = ?
 `;
 
 
-interface Migration{
-
-}
 
 class Schema{
   private client: Client;
   private logger: Logger;
-  private migrations!: MigrationDB[];
+  private migrations!: PersistedMigration[];
 
   constructor(client: Client, logger: Logger) {
     /**
@@ -100,9 +98,12 @@ class Schema{
    */
   async load(){
     try {
-      this.migrations = await this.client.execute(
-        selectSchemaTable, {prepare: true}
-      );
+      const { rows } = await this.client.execute(
+        selectSchemaTable, {
+          prepare: true
+        }
+      )
+      this.migrations = rows;
     }
     catch(error){
       this.logger.error("Error reading schema", {error});
@@ -113,10 +114,9 @@ class Schema{
   /**
    * Check if migration exist in schema
    */
-  has({filename}){
+  has({filename}: Migration){
     return this
       .migrations
-      .rows
       .some(migration => migration.filename === filename);
   }
 
@@ -124,16 +124,15 @@ class Schema{
    * Check if migration is recent
    *
    */
-  isRecent({version}){
+  isRecent({version}: Migration){
     return this.getVersion() === version;
   }
 
   /**
    * Get migrations
    */
-  getMigrations(directory){
+  getMigrations(directory: string){
     return this.migrations
-      .rows
       .map(migration => MigrationFactory.fromDB(migration, directory));
   }
 
@@ -144,24 +143,16 @@ class Schema{
    * @return {Number}
    */
   getVersion(){
-    const migration = last(this.migrations.rows);
-
-    if(migration){
-      return migration.version;
-    }
-    else {
-      return 0;
-    }
+    const migration = last(this.migrations);
+    return migration?.version ?? 0;
   }
 
   /**
    * Run up statement migration
    *
-   * @param  {Migration} migration
-   * @return {void}
    */
-  async up(migration){
-    migration.timestamp = new Date();
+  async up(migration: Migration){
+    migration.timestamp = Date.now();
 
     const {
       up: {
@@ -171,19 +162,17 @@ class Schema{
       filename
     } = migration;
 
-    await this.client
+    await this
+      .client
       .execute(query, params, {prepare: true});
 
-    this.logger.info("Up - Migration successfull", {filename});
+    this.logger.info("Up - Migration successful", {filename});
   }
 
   /**
    * Run down statement in migration
-   *
-   * @param  {Migration} migration
-   * @return {void}
    */
-  async down(migration){
+  async down(migration: Migration){
     const {
       down: {
         query,
@@ -192,30 +181,19 @@ class Schema{
       filename
     } = migration;
 
-    await this.client
+    await this
+      .client
       .execute(query, params, {prepare: true});
 
-    this.logger.info("Down - Migration succesfull", {filename});
-  }
-
-  /**
-   * Migration history for current version
-   *
-   * @return {Array}
-   */
-  getHistory(){
-    return this.history || (this.history = []);
+    this.logger.info("Down - Migration successful", {filename});
   }
 
   /**
    * Add migration to schema
    *
-   * @param {Migration} migration
    */
-  async add(migration){
+  async add(migration: Migration){
     migration.version = this.getVersion() + 1;
-
-    this.getHistory().push(migration);
 
     const query = `
       INSERT INTO schema_migration
@@ -241,10 +219,8 @@ class Schema{
 
   /**
    * Remove migration from schema
-   *
-   * @param  {Migration} migration
    */
-  async remove({filename}){
+  async remove({filename}: Migration){
     try{
       await this.client.execute(removeMigration, [filename]);
     }

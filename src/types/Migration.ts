@@ -1,9 +1,12 @@
+import Run from "./Run";
 
 interface Migration {
   filename: string;
-  content: string
-  timestamp: number;
-  version: string;
+  up: Run;
+  down: Run;
+  content: string;
+  timestamp?: number;
+  version?: number;
 }
 
 export default Migration;

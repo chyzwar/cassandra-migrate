@@ -2,6 +2,7 @@ import Migration from "../types/Migration";
 import MigrationJS from "./MigrationJS";
 import MigrationCQL from "./MigrationCQL";
 import {extname} from "path";
+import PersistedMigration from "../types/SavedMigration";
 
 class MigrationFactory{
   /**
@@ -11,7 +12,7 @@ class MigrationFactory{
    * @param  {String} directory
    * @return {Migration}
    */
-  static fromDB(migration: Migration, directory: string): Migration{
+  static fromDB(migration: PersistedMigration, directory: string): Migration{
     const extension = extname(migration.filename);
 
     if(extension === "JS"){

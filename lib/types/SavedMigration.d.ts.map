@@ -1,0 +1,1 @@
+{"version":3,"file":"SavedMigration.d.ts","sourceRoot":"","sources":["../../src/types/SavedMigration.ts"],"names":[],"mappings":"AACA,UAAU,kBAAkB;IAC1B,QAAQ,EAAE,MAAM,CAAC;IACjB,OAAO,EAAE,MAAM,CAAA;IACf,SAAS,EAAE,MAAM,CAAC;IAClB,OAAO,EAAE,MAAM,CAAC;CACjB;AAED,eAAe,kBAAkB,CAAC"}

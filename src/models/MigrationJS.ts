@@ -1,9 +1,18 @@
 import {join} from "path";
 import {readFileSync} from "fs";
 import Migration from "../types/Migration";
+import PersistedMigration from "../types/SavedMigration";
+import Run from "../types/Run";
 
 class MigrationJS implements Migration{
-  constructor(filename, content, up: string, down: string, timestamp, version) {
+  filename: string;
+  content: string;
+  timestamp?: number;
+  version?: number;
+  up: Run;
+  down: Run;
+
+  constructor(filename: string, content: string, up: Run, down: Run, timestamp?: number, version?: number) {
     /**
      * Set filePath
      *
@@ -21,21 +30,16 @@ class MigrationJS implements Migration{
     /**
      * Up statement
      *
-     * @type {Object}
      */
     this.up = up;
 
     /**
      * Down statement
-     *
-     * @type {Object}
      */
     this.down = down;
 
     /**
      * Timestamp of migration
-     *
-     * @type {Data}
      */
     this.timestamp = timestamp,
 
@@ -45,12 +49,8 @@ class MigrationJS implements Migration{
      */
     this.version = version
   }
-  filename: string;
-  content: string;
-  timestamp: number;
-  version: string;
 
-  static fromDB({filename, content, timestamp, version}: Migration, directory: string){
+  static fromDB({filename, content, timestamp, version}: PersistedMigration, directory: string): Migration{
     const filePath = join(directory, filename);
 
     const {
@@ -68,9 +68,9 @@ class MigrationJS implements Migration{
     );
   }
 
-  static fromFile(filename: string, directory: string){
+  static fromFile(filename: string, directory: string): Migration{
     const filePath = join(directory, filename);
-    const content = readFileSync(filePath);
+    const content = readFileSync(filePath).toString();
 
     const {
       up,
