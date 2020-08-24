@@ -32,6 +32,6 @@
     "@types/lodash": "4.x.x",
     "@types/commander": "2.x.x",
     "eslint": "7.x.x",
-    "typescript": "3.x.x"
+    "typescript": "4.x.x"
   }
 }
