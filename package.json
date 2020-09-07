@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/chyzwar/cassandra-migrate#readme",
   "dependencies": {
-    "commander": "2.x.x",
+    "commander": "6.x.x",
     "winston": "3.x.x",
     "lodash": "4.x.x",
     "moment": "2.x.x"
