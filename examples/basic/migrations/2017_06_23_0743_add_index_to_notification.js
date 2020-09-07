@@ -2,11 +2,11 @@
 const add_index_to_notification = {
   up: {
     query: `
-    CREATE INDEX IF NOT EXISTS subscribtion_idx ON notification (subscribtion)`
+    CREATE INDEX IF NOT EXISTS subscription_idx ON notification (subscription)`
   },
   down: {
     query: `
-    DROP INDEX IF EXISTS subscribtion_idx`,
+    DROP INDEX IF EXISTS subscription_idx`,
   }
 };
 

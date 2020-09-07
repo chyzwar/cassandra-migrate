@@ -4,7 +4,7 @@ const create_notification_table = {
     query: `
     CREATE TABLE IF NOT EXISTS notification (
       uuid uuid,
-      subscribtion text,
+      subscription text,
       content text,
       timestamp timestamp,
       PRIMARY KEY(uuid)

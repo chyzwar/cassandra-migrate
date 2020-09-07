@@ -5,7 +5,7 @@ const users_table = {
     CREATE TABLE IF NOT EXISTS user (
       username text,
       timestamp timestamp,
-      subscribtions set<text>,
+      subscriptions set<text>,
       PRIMARY KEY(username)
     )`,
   },
