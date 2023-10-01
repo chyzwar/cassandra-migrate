@@ -4,7 +4,7 @@ import MigrationCQL from "./MigrationCQL";
 import {extname} from "path";
 import PersistedMigration from "../types/SavedMigration";
 
-class MigrationFactory{
+class  MigrationFactory{
   /**
    * Create Migration from DB record
    *
