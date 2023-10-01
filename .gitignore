@@ -1,12 +1,24 @@
-# Logs
-*.log
-
-# Node Files #
+# dependencies
 node_modules
+.yarn/cache
+.yarn/install-state.gz
 
-# Build Folder #
+# testing
+/coverage
+
+# production
+lib
 build
+buildInfo.json
 
-# Editors #
-.idea/
-.vscode
+# misc
+.env
+.eslintcache
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore build files
+buildInfo.json
